@@ -1,0 +1,10 @@
+
+.idea/$PROJECT_FILE$
+.idea/vcs.xml
+.idea/qaplug_profiles.xml
+.idea/misc.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+*.class
+.idea/uiDesigner.xml
+.idea/uiDesigner.xml
