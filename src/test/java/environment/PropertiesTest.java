@@ -20,20 +20,18 @@ public class PropertiesTest {
     }
 
     @Test
-    public void test_getApplicationProperties() throws IOException {
+    public void test_loadApplicationProperties() throws IOException {
         Properties properties = new Properties();
         InputStream inputStream = new FileInputStream("C:\\Users\\A035776\\Documents\\dev\\selenium-tutorial\\src\\main\\resources\\app.properties");
         properties.load(inputStream);
         Assert.assertNotNull(properties);
         properties.forEach((k, v) -> System.out.println("key : " + k + ", value " + v));
     }
-    // test PropertiesManager
+
     @Test
-    public void test_listPropertiesCount() throws IOException {
+    public void test_propertiesCount() throws IOException {
         Properties properties = PropertiesManager.getProperties();
-        properties.forEach((k, v) -> {
-            System.out.println("key : " + k + ", value " + v);
-        });
+        properties.forEach((k, v) -> System.out.println("key : " + k + ", value " + v));
         assertEquals("Count mismatch : ", 1, properties.size());
     }
 
