@@ -15,8 +15,8 @@ public class FirstDemoTest {
 
     @Test
     public void test_firstDemo() {
-        FirstDemo demo = new FirstDemo();
-        demo.demo();
+        FirstDemo firstDemo = new FirstDemo();
+        firstDemo.demo();
     }
     @After
     public void tearDown() throws Exception {
