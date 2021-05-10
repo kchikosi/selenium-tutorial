@@ -1,4 +1,4 @@
-package tests.environment;
+package environment;
 
 import environment.PropertiesManager;
 import org.junit.Assert;
@@ -34,7 +34,7 @@ public class PropertiesTest {
         properties.forEach((k, v) -> {
             System.out.println("key : " + k + ", value " + v);
         });
-        Assert.assertEquals("Count mismatch : ", 1, properties.size());
+        assertEquals("Count mismatch : ", 1, properties.size());
     }
 
     @Test

@@ -1,4 +1,4 @@
-package tests.demo;
+package demo;
 
 import demo.FirstDemo;
 import environment.EnvironmentManager;

@@ -1,4 +1,4 @@
-package tests.demo;
+package demo;
 
 import environment.EnvironmentManager;
 import environment.RunEnvironment;
