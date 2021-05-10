@@ -1,13 +1,10 @@
-package tests;
+package tests.environment;
 
 import environment.PropertiesManager;
-import environment.RunEnvironment;
 import org.junit.Assert;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -32,11 +29,12 @@ public class PropertiesTest {
     }
     // test PropertiesManager
     @Test
-    public void test_listProperties() throws IOException {
+    public void test_listPropertiesCount() throws IOException {
         Properties properties = PropertiesManager.getProperties();
         properties.forEach((k, v) -> {
             System.out.println("key : " + k + ", value " + v);
         });
+        Assert.assertEquals("Count mismatch : ", 1, properties.size());
     }
 
     @Test
@@ -44,7 +42,7 @@ public class PropertiesTest {
         String key = "webdriver.chrome.driver";
         String actual = PropertiesManager.getValue(key);;
         String expected = "C:\\Users\\A035776\\Documents\\Development\\AMICA Dev\\Selenium\\SeleniumWebDriver\\chromedriver.exe";
-        String msg = "Mismatch ";
+        String msg = "String mismatch : ";
         assertEquals(msg, expected, actual);
     }
 }
