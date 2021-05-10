@@ -3,9 +3,12 @@ package environment;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.IOException;
+
 public class EnvironmentManager {
-    public static void initWebDriver() {
-        System.setProperty("webdriver.chrome.driver","C:\\Users\\A035776\\Documents\\Development\\AMICA Dev\\Selenium\\SeleniumWebDriver\\chromedriver.exe");
+    public static void initWebDriver() throws IOException {
+        String chromeDriver = "webdriver.chrome.driver";
+        System.setProperty(chromeDriver, PropertiesManager.getValue(chromeDriver));
         WebDriver driver = new ChromeDriver();
         RunEnvironment.setWebDriver(driver);
     }

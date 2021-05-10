@@ -8,3 +8,4 @@
 *.class
 .idea/uiDesigner.xml
 .idea/uiDesigner.xml
+target/classes/app.properties
