@@ -18,6 +18,7 @@ public class FirstDemoTest {
         FirstDemo firstDemo = new FirstDemo();
         firstDemo.demo();
     }
+
     @After
     public void tearDown() throws Exception {
         EnvironmentManager.shutDownDriver();
