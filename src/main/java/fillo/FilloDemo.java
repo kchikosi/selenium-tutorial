@@ -29,7 +29,7 @@ public class FilloDemo {
             recordSet = getConnection(dataSource).executeQuery(query);
         } catch (FilloException e) {
             LOGGER.error(e.getMessage());
-            throw new FilloException("File not found" + e.getMessage());
+            throw new FilloException("No records found" + e.getMessage());
         }
         return recordSet;
     }
