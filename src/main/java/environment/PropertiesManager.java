@@ -1,6 +1,5 @@
 package environment;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -12,7 +11,8 @@ public class PropertiesManager {
         ClassLoader classLoader = PropertiesManager.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream("app.properties");
         properties.load(inputStream);
-        return  properties;
+        inputStream.close();
+        return properties;
     }
 
     public static String getKey(String value) throws IOException {

@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 public class FilloDemo {
     private static final Logger LOGGER = LogManager.getLogger(Fillo.class);
-    Fillo fillo = new Fillo();
+    final Fillo fillo = new Fillo();
     Connection connection = null;
     private String dataSource;
 
@@ -24,7 +24,7 @@ public class FilloDemo {
     }
 
     public Recordset getRecordSet(String query) throws FilloException {
-        Recordset recordSet = null;
+        Recordset recordSet;
         try {
             recordSet = getConnection(dataSource).executeQuery(query);
         } catch (FilloException e) {

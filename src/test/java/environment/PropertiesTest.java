@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -28,6 +27,7 @@ public class PropertiesTest {
         ClassLoader classLoader = PropertiesManager.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream("app.properties");
         properties.load(inputStream);
+        inputStream.close();
         Assert.assertNotNull(properties);
         properties.forEach((k, v) -> logger.info("key : " + k + ", value " + v));
     }

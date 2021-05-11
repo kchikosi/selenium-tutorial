@@ -1,6 +1,5 @@
 package demo;
 
-import demo.FirstDemo;
 import environment.EnvironmentManager;
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +19,7 @@ public class FirstDemoTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         EnvironmentManager.shutDownDriver();
     }
 }
