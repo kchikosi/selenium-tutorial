@@ -25,7 +25,8 @@ public class PropertiesTest {
     @Test
     public void test_loadApplicationProperties() throws IOException {
         Properties properties = new Properties();
-        InputStream inputStream = new FileInputStream("C:\\Users\\A035776\\Documents\\dev\\selenium-tutorial\\src\\main\\resources\\app.properties");
+        ClassLoader classLoader = PropertiesManager.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("app.properties");
         properties.load(inputStream);
         Assert.assertNotNull(properties);
         properties.forEach((k, v) -> logger.info("key : " + k + ", value " + v));

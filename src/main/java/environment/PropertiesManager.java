@@ -9,7 +9,8 @@ public class PropertiesManager {
 
     public static Properties getProperties() throws IOException {
         Properties properties = new Properties();
-        InputStream inputStream = new FileInputStream("C:\\Users\\A035776\\Documents\\dev\\selenium-tutorial\\src\\main\\resources\\app.properties");
+        ClassLoader classLoader = PropertiesManager.class.getClassLoader();
+        InputStream inputStream = classLoader.getResourceAsStream("app.properties");
         properties.load(inputStream);
         return  properties;
     }
