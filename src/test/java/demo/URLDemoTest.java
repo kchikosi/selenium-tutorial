@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class FirstDemoTest {
+public class URLDemoTest {
 
     @Before
     public void setUp() throws Exception {
@@ -14,8 +14,8 @@ public class FirstDemoTest {
 
     @Test
     public void test_firstDemo() {
-        FirstDemo firstDemo = new FirstDemo();
-        firstDemo.demo();
+        URLDemo URLDemo = new URLDemo();
+        URLDemo.goToUrl();
     }
 
     @After
