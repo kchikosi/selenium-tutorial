@@ -9,3 +9,11 @@
 .idea/uiDesigner.xml
 target/classes/app.properties
 target/classes/TestFramework.xlsx
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
+target/test-classes/testng.xml
+target/classes/GetModal.css
+target/classes/GetModal.js
+target/classes/ModalPopup.html
