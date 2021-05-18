@@ -13,6 +13,6 @@ public class PCLoginTest {
         PCLogin pcLogin = new PCLogin();
         String loginUrl = pcLogin.login();
         String homePage = "http://localhost:8180/pc/PolicyCenter.do";
-        assertEquals(loginUrl, homePage);
+        assertEquals("Unable to open URL " + homePage, loginUrl, homePage);
     }
 }
