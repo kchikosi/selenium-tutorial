@@ -17,3 +17,4 @@ target/test-classes/testng.xml
 target/classes/GetModal.css
 target/classes/GetModal.js
 target/classes/ModalPopup.html
+.idea/runConfigurations.xml
