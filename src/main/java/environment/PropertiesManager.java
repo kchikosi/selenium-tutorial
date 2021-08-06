@@ -9,7 +9,7 @@ public class PropertiesManager {
     public static Properties getProperties() throws IOException {
         Properties properties = new Properties();
         ClassLoader classLoader = PropertiesManager.class.getClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("app.properties");
+        InputStream inputStream = classLoader.getResourceAsStream("config.properties");
         properties.load(inputStream);
         inputStream.close();
         return properties;

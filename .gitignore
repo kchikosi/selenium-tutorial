@@ -57,3 +57,5 @@ target/surefire-reports/testng-reports2.js
 target/surefire-reports/testng-results.xml
 target/surefire-reports/testng.css
 target/surefire-reports/TestSuite.txt
+target/classes/config.properties
+target/test-classes/TestFramework.xlsx
