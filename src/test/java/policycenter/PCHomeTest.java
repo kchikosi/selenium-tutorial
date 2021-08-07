@@ -6,12 +6,12 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class PCLoginTest {
+public class PCHomeTest {
 
     @Test
-    public void login() throws IOException {
-        PCLogin pcLogin = new PCLogin();
-        String loginUrl = pcLogin.login();
+    public void home() throws IOException {
+        PCHome pcHome = new PCHome();
+        String loginUrl = pcHome.getHome();
         String homePage = "http://localhost:8180/pc/PolicyCenter.do";
         assertEquals("Unable to open URL " + homePage, loginUrl, homePage);
     }
