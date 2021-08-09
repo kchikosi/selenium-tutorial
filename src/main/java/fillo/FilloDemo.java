@@ -23,13 +23,17 @@ public class FilloDemo {
         return connection;
     }
 
-    public Recordset getRecordSet(String query) throws FilloException {
+    public Recordset getRecordSet(String dataSource, String query) throws FilloException {
         Recordset recordSet;
         try {
             recordSet = getConnection(dataSource).executeQuery(query);
         } catch (FilloException e) {
             LOGGER.error(e.getMessage());
-            throw new FilloException("No records found" + e.getMessage());
+            throw new FilloException(e.getMessage());
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         return recordSet;
     }
