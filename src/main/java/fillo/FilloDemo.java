@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class FilloDemo {
-    private static final Logger LOGGER = LogManager.getLogger(Fillo.class);
+    private static final Logger logger = LogManager.getLogger(Fillo.class);
     final Fillo fillo = new Fillo();
     Connection connection = null;
     private String dataSource;
@@ -17,7 +17,7 @@ public class FilloDemo {
         try {
             connection = fillo.getConnection(dataSource);
         } catch (FilloException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
             throw new FilloException("File not found" + e.getMessage());
         }
         return connection;
@@ -28,7 +28,7 @@ public class FilloDemo {
         try {
             recordSet = getConnection(dataSource).executeQuery(query);
         } catch (FilloException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
             throw new FilloException(e.getMessage());
         } finally {
             if (connection != null) {

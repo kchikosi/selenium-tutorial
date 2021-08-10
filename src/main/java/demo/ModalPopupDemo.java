@@ -9,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 import java.util.concurrent.TimeUnit;
 
 public class ModalPopupDemo {
-    private static final Logger LOGGER = LogManager.getLogger(RunEnvironment.class);
+    private static final Logger logger = LogManager.getLogger(RunEnvironment.class);
 
     public boolean openPopup() {
         try {
@@ -17,11 +17,11 @@ public class ModalPopupDemo {
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             driver.navigate().to("C:\\Users\\A035776\\Documents\\dev\\selenium-tutorial\\web\\ModalPopup.html");
             driver.findElement(By.id("myBtn")).click();
-            LOGGER.info(driver.findElement(By.tagName("body")).getText());
+            logger.info(driver.findElement(By.tagName("body")).getText());
             driver.findElement(By.id("userid")).sendKeys("testuser");
             driver.findElement(By.id("password")).sendKeys("testpass");
         } catch (Exception e) {
-            LOGGER.error("Error in openPopup() " + e.getClass(), e.toString());
+            logger.error("Error in openPopup() " + e.getClass(), e.toString());
             return false;
         }
         return true;
