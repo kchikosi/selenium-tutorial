@@ -4,6 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class EnvironmentManager {
     public static void initWebDriver() throws IOException {
@@ -16,4 +17,5 @@ public class EnvironmentManager {
     public static void shutDownDriver() {
         RunEnvironment.getWebDriver().quit();
     }
+
 }

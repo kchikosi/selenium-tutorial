@@ -20,6 +20,7 @@ public class ModalPopupDemo {
             logger.info(driver.findElement(By.tagName("body")).getText());
             driver.findElement(By.id("userid")).sendKeys("testuser");
             driver.findElement(By.id("password")).sendKeys("testpass");
+            driver.findElement(By.id("ok")).click();
         } catch (Exception e) {
             logger.error("Error in openPopup() " + e.getClass(), e.toString());
             return false;

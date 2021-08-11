@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class PCHome {
     public PCHome() throws IOException {
-        EnvironmentManager.initWebDriver();
+//        EnvironmentManager.initWebDriver();
     }
 
     public String getHome() {
