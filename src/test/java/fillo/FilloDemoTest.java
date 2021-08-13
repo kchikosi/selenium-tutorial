@@ -44,7 +44,7 @@ public class FilloDemoTest {
     @Test
     public void test_RecordSet_IsNotNull() throws FilloException {
         FilloDemo filloDemo = new FilloDemo();
-        String query = "select * from TestCases where TestCaseId in (select TestCaseId from TestConfig where Execute_Flag = 'Y')";
+        String query = "select * from testcases where testcaseid in (select testcaseid from testconfig where execute_flag = 'Y')";
         Recordset recordset = filloDemo.getRecordSet(dataSource, query);
         Assert.assertNotNull(recordset);
     }
@@ -52,7 +52,7 @@ public class FilloDemoTest {
     @Test
     public void test_testCaseID_TC001() throws IOException {
         FilloDemo filloDemo = new FilloDemo();
-        String query = "select * from TestCases where TestCaseId in (select TestCaseId from TestConfig where Execute_Flag = 'Y')";
+        String query = "select * from testcases where testcaseid in (select testcaseid from testconfig where execute_flag = 'Y')";
         String datasource = PropertiesManager.getValue(DATASOURCE_PROP);
         Recordset recordset = null;
         List<Map<String, String>> testStepsList = null;
