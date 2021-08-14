@@ -1,21 +1,24 @@
 package policycenter.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 /**
  * Page object encapsulates PC Home page
  */
 public class PCHomePage {
 
-    private final WebDriver driver;
-    private By titleBy = By.className("gw-TitleBar--title");
+    //locators
+    @FindBy(className = "gw-TitleBar--title")
+    private WebElement pageTitle;
 
     public PCHomePage(WebDriver driver) {
-        this.driver = driver;
+        PageFactory.initElements(driver, this);
     }
 
-    public String getMessageText() {
-        return driver.findElement(titleBy).getText();
+    public boolean isPageOpened() {
+        return pageTitle.getText().contains("My Summary");
     }
 }
