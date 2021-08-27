@@ -25,9 +25,9 @@ public class PCLoginPageTest {
     @Test
     public void test_PCLogin() throws InterruptedException {
         PCLoginPage pcLoginPage = new PCLoginPage(driver);
-        pcLoginPage.setPassword("gw");
-        pcLoginPage.setUsername("su");
-        pcLoginPage.clickLogin();
+        pcLoginPage.setByNamePassword("gw");
+        pcLoginPage.setByNameUsername("su");
+        pcLoginPage.byIdClickLogin();
 
         PCHomePage homePage = new PCHomePage(driver);
         Thread.sleep(5000);
@@ -35,7 +35,7 @@ public class PCLoginPageTest {
 
     }
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         EnvironmentManager.shutDownDriver();
     }
 }

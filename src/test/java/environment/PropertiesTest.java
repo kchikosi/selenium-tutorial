@@ -36,7 +36,7 @@ public class PropertiesTest {
     public void test_propertiesCount() throws IOException {
         Properties properties = PropertiesManager.getProperties();
         properties.forEach((k, v) -> logger.info("key : " + k + ", value " + v));
-        assertEquals("Count mismatch : ", 2, properties.size());
+        assertEquals("Count mismatch : ", 4, properties.size());
     }
 
     @Test
