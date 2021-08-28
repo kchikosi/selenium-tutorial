@@ -11,25 +11,29 @@ public class FilloDemo {
     private static final Logger logger = LogManager.getLogger(Fillo.class);
     final Fillo fillo = new Fillo();
     Connection connection = null;
-    private String dataSource;
+    private final String dataSource;
 
-    public Connection getConnection(String dataSource) throws FilloException {
+    public FilloDemo(String dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public Connection getConnection() throws FilloException {
         try {
             connection = fillo.getConnection(dataSource);
         } catch (FilloException e) {
             logger.error(e.getMessage());
-            throw new FilloException("File not found" + e.getMessage());
+            throw e;
         }
         return connection;
     }
 
-    public Recordset getRecordSet(String dataSource, String query) throws FilloException {
+    public Recordset getRecordSet(String query) throws FilloException {
         Recordset recordSet;
         try {
-            recordSet = getConnection(dataSource).executeQuery(query);
+            recordSet = getConnection().executeQuery(query);
         } catch (FilloException e) {
             logger.error(e.getMessage());
-            throw new FilloException(e.getMessage());
+            throw e;
         } finally {
             if (connection != null) {
                 connection.close();

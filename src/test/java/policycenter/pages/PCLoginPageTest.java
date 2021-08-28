@@ -1,4 +1,4 @@
-package policycenter;
+package policycenter.pages;
 
 import environment.EnvironmentManager;
 import environment.RunEnvironment;

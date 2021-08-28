@@ -17,6 +17,7 @@ import policycenter.pages.PCLoginPage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.ToDoubleBiFunction;
 
 public class AccountSearchTest {
     private WebDriver driver;
@@ -45,12 +46,16 @@ public class AccountSearchTest {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id=\'TabBar-AccountTab\']/div/div[2]")));
         }
         //enter account number
+        //TODO: move locators to Account Summary page object
         driver.findElement(By.xpath("//div[@id=\'TabBar-AccountTab\']/div[3]/div")).click();
         driver.findElement(By.xpath("//input[@name=\'TabBar-AccountTab-AccountTab_AccountNumberSearchItem\']")).sendKeys("N001958701");
         driver.findElement(By.xpath("//div[@id=\'TabBar-AccountTab-AccountTab_AccountNumberSearchItem_Button\']/span")).click();
-        Thread.sleep(4000);
-        //logout
-        driver.findElement(By.xpath("//div[@id=\'gw-TabBarWidget--settings\']/div/span")).click();
+
+        {
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".gw-focus > .gw-label")));
+        }
+        driver.findElement(By.cssSelector(".gw-focus > .gw-label")).click();
 
     }
 }
