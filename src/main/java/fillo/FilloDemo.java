@@ -7,6 +7,9 @@ import com.codoid.products.fillo.Recordset;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * keyword driven testing framework
+ */
 public class FilloDemo {
     private static final Logger logger = LogManager.getLogger(Fillo.class);
     final Fillo fillo = new Fillo();

@@ -11,10 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FilloDemoTest {
     private static final Logger logger = LogManager.getLogger(FilloDemoTest.class);
@@ -52,20 +49,18 @@ public class FilloDemoTest {
     public void test_testCaseID_TC001() throws IOException {
         FilloDemo filloDemo = new FilloDemo(dataSource);
         String query = "select * from testcases where testcaseid in (select testcaseid from testconfig where execute_flag = 'Y')";
-//        String datasource = PropertiesManager.getValue(DATASOURCE_PROP);
         Recordset recordset = null;
-        List<Map<String, String>> testStepsList = null;
+        List<Map<String, String>> testStepsList = new ArrayList<>();
         try {
             recordset = filloDemo.getRecordSet(query);
-            Map<String, String> testCaseData = new HashMap<>();
-            testStepsList = new ArrayList<Map<String, String>>();
             //series of events for TC001 record in the spreadsheet
             while (recordset.next()) {
-                testCaseData.put("TestCaseID", recordset.getField("TestCaseID"));
-                testCaseData.put("Keyword", recordset.getField("Keyword"));
-                testCaseData.put("Object", recordset.getField("Object"));
-                testCaseData.put("Data", recordset.getField("Data"));
-                testStepsList.add(testCaseData);
+                Map<String, String> testCaseStep = new HashMap<>();
+                testCaseStep.put("TestCaseID", recordset.getField("TestCaseID"));
+                testCaseStep.put("Keyword", recordset.getField("Keyword"));
+                testCaseStep.put("Object", recordset.getField("Object"));
+                testCaseStep.put("Data", recordset.getField("Data"));
+                testStepsList.add(testCaseStep);
             }
         } catch (FilloException e) {
             logger.error(e.getMessage());
