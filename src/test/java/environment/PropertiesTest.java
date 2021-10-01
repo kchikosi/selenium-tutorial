@@ -43,7 +43,7 @@ public class PropertiesTest {
     public void test_getPropertyValueUsingKeyString() throws IOException {
         String key = "webdriver.chrome.driver";
         String actual = PropertiesManager.getValue(key);
-        String expected = "C:\\Users\\A035776\\Documents\\Development\\AMICA Dev\\Selenium\\SeleniumWebDriver\\chrome\\version\\92\\chromedriver.exe";
+        String expected = "C:\\Users\\A035776\\Documents\\Development\\AMICA Dev\\Selenium\\SeleniumWebDriver\\chrome\\version\\94\\chromedriver.exe";
         String msg = "String mismatch : ";
         assertEquals(msg, expected, actual);
     }

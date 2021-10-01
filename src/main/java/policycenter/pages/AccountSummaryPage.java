@@ -8,19 +8,19 @@ import org.openqa.selenium.support.PageFactory;
 /**
  * Page object encapsulates PC AccountSummary page
  */
-public class PCSummaryPage {
+public class AccountSummaryPage {
 
     //locators
-    @FindBy(xpath = "//div[@id=\'TabBar-AccountTab\']/div[3]/div")
+    @FindBy(xpath = "//div[@id='TabBar-AccountTab']/div[3]/div")
     private WebElement accountTab;
-    @FindBy(xpath = "//input[@name=\'TabBar-AccountTab-AccountTab_AccountNumberSearchItem\']")
+    @FindBy(xpath = "//input[@name='TabBar-AccountTab-AccountTab_AccountNumberSearchItem']")
     private WebElement accountNumber;
-    @FindBy(xpath = "//div[@id=\'TabBar-AccountTab-AccountTab_AccountNumberSearchItem_Button\']/span")
+    @FindBy(xpath = "//div[@id='TabBar-AccountTab-AccountTab_AccountNumberSearchItem_Button']/span")
     private WebElement accountNumberSearchButton;
     @FindBy(className = "gw-TitleBar--title")
     private WebElement pageTitle;
 
-    public PCSummaryPage(WebDriver driver) {
+    public AccountSummaryPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
@@ -38,6 +38,6 @@ public class PCSummaryPage {
     }
 
     public boolean isPageOpened() {
-        return pageTitle.getText().contains("My Summary");
+        return pageTitle.getText().contains("Account Summary:");
     }
 }

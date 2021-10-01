@@ -46,32 +46,12 @@ public class FilloDemoTest {
     }
 
     @Test
-    public void test_testCaseID_TC001() throws IOException {
-        FilloDemo filloDemo = new FilloDemo(dataSource);
+    public void test_testCaseID_TC001() throws IOException, FilloException {
         String query = "select * from testcases where testcaseid in (select testcaseid from testconfig where execute_flag = 'Y')";
-        Recordset recordset = null;
-        List<Map<String, String>> testStepsList = new ArrayList<>();
-        try {
-            recordset = filloDemo.getRecordSet(query);
-            //series of events for TC001 record in the spreadsheet
-            while (recordset.next()) {
-                Map<String, String> testCaseStep = new HashMap<>();
-                testCaseStep.put("TestCaseID", recordset.getField("TestCaseID"));
-                testCaseStep.put("Keyword", recordset.getField("Keyword"));
-                testCaseStep.put("Object", recordset.getField("Object"));
-                testCaseStep.put("Data", recordset.getField("Data"));
-                testStepsList.add(testCaseStep);
-            }
-        } catch (FilloException e) {
-            logger.error(e.getMessage());
-        } finally {
-            if (recordset != null) {
-                recordset.close();
-            }
-        }
-        logger.info("Test steps list data : " + testStepsList);
+        List<Map<String, String>> testStepsList = FilloUtils.getStepsList(query);
         //we can assert a number of things
-        //total number of steps should be 6
-        Assert.assertEquals(6, testStepsList.size());
+        //total number of steps should be 12
+        Assert.assertEquals(12, testStepsList.size());
     }
+
 }
