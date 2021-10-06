@@ -48,7 +48,7 @@ public class FilloDemoTest {
     @Test
     public void test_testCaseID_TC001() throws IOException, FilloException {
         String query = "select * from testcases where testcaseid in (select testcaseid from testconfig where execute_flag = 'Y')";
-        List<Map<String, String>> testStepsList = FilloUtils.getStepsList(query);
+        List<Map<String, String>> testStepsList = FilloHelper.getStepsList(query);
         //we can assert a number of things
         //total number of steps should be 12
         Assert.assertEquals(12, testStepsList.size());

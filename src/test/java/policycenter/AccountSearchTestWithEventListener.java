@@ -8,12 +8,14 @@ import environment.EnvironmentManager;
 import environment.PropertiesManager;
 import environment.RunEnvironment;
 import fillo.FilloHelper;
+import listener.WebEventListener;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import policycenter.pages.AccountSummaryPage;
@@ -24,14 +26,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class AccountSearchTest {
-    private WebDriver driver;
+public class AccountSearchTestWithEventListener {
+    private EventFiringWebDriver eventFiringWebDriver;
     private Connection connection;
+    private         WebDriver driver;
 
     @Before
     public void setUp() throws IOException, FilloException {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
+        eventFiringWebDriver = new EventFiringWebDriver(driver);
+        WebEventListener eventListener = new WebEventListener();
+        eventFiringWebDriver.register(eventListener);
         String filloDatasource = PropertiesManager.getValue("fillo.test.datasource");
         connection = new Fillo().getConnection(filloDatasource);
     }
@@ -39,11 +45,13 @@ public class AccountSearchTest {
     @After
     public void tearDown() {
         connection.close();
+        eventFiringWebDriver.close();
         driver.quit();
     }
 
     /**
      * Read from Excel file and executes based on data
+     *
      * @throws FilloException is thrown
      */
     @Test
@@ -55,29 +63,30 @@ public class AccountSearchTest {
         Optional<String> user = FilloHelper.getDataByColumnName(testStepsList, "USERNAME");
         Optional<String> passwd = FilloHelper.getDataByColumnName(testStepsList, "PASSWORD");
 
-        PCLoginPage pcLoginPage = new PCLoginPage(driver);
+//        PCLoginPage pcLoginPage = new PCLoginPage(driver);
+        PCLoginPage pcLoginPage = new PCLoginPage(eventFiringWebDriver);
         // orElse used in case there is no data
         //TODO: fix this mess
         pcLoginPage.setByXPathUsername(user.orElseThrow());
         pcLoginPage.setByXPathPassword(passwd.orElseThrow());
         pcLoginPage.byXPathClickLogin();
         {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='TabBar-AccountTab']/div/div[2]")));
         }
 
-        AccountSummaryPage accountSummaryPage = new AccountSummaryPage(driver);
+        AccountSummaryPage accountSummaryPage = new AccountSummaryPage(eventFiringWebDriver);
         accountSummaryPage.accountTabClick();
         Optional<String> accountNumber = FilloHelper.getDataByColumnName(testStepsList, "ACCOUNTNUMBER");
         accountSummaryPage.setAccountNumber(accountNumber.orElseThrow());
         accountSummaryPage.accountNumberSearchButtonClick();
         {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".gw-focus > .gw-label")));
             Assert.assertTrue(accountSummaryPage.isPageOpened());
         }
         //logout
-        driver.findElement(By.cssSelector(".gw-focus > .gw-label")).click();
+        eventFiringWebDriver.findElement(By.cssSelector(".gw-focus > .gw-label")).click();
 
     }
 

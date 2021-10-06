@@ -13,16 +13,18 @@ import java.util.*;
 
 /**
  * Utility to perform operation on a spreadsheet using Fillo framework
+ *
  * @author KC
  * @version 1.0
  */
-public class FilloUtils {
-    private static final Logger logger = LogManager.getLogger(FilloUtils.class);
+public class FilloHelper {
+    private static final Logger logger = LogManager.getLogger(FilloHelper.class);
 
     /**
-     * Reads a list of steps required to perform an operation from spreadsheet
+     * Reads a list of steps required to perform an operation from spreadsheet and save to a list
+     *
      * @param query sql statement
-     * @return list of steps
+     * @return list of test execution steps
      */
     public static List<Map<String, String>> getStepsList(String query) throws IOException, FilloException {
         List<Map<String, String>> testStepsList = new ArrayList<>();
@@ -51,9 +53,10 @@ public class FilloUtils {
 
     /**
      * Search through list of steps for a particular column and return the value
+     *
      * @param testStepsList arraylist of steps
-     * @param columnName user interface widget in spreadsheet
-     * @return value equivalent to a user entry via the user-interface
+     * @param columnName    user interface widget in spreadsheet
+     * @return value equivalent to a user would enter in the UI
      */
     public static Optional<String> getDataByColumnName(List<Map<String, String>> testStepsList, String columnName) {
         return testStepsList.stream()
