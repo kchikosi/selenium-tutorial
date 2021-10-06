@@ -29,7 +29,7 @@ import java.util.Optional;
 public class AccountSearchTestWithEventListener {
     private EventFiringWebDriver eventFiringWebDriver;
     private Connection connection;
-    private         WebDriver driver;
+    private WebDriver driver;
 
     @Before
     public void setUp() throws IOException, FilloException {
@@ -63,7 +63,6 @@ public class AccountSearchTestWithEventListener {
         Optional<String> user = FilloHelper.getDataByColumnName(testStepsList, "USERNAME");
         Optional<String> passwd = FilloHelper.getDataByColumnName(testStepsList, "PASSWORD");
 
-//        PCLoginPage pcLoginPage = new PCLoginPage(driver);
         PCLoginPage pcLoginPage = new PCLoginPage(eventFiringWebDriver);
         // orElse used in case there is no data
         //TODO: fix this mess

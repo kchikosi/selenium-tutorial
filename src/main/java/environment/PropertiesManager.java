@@ -11,7 +11,9 @@ public class PropertiesManager {
         ClassLoader classLoader = PropertiesManager.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream("config.properties");
         properties.load(inputStream);
-        inputStream.close();
+        if (inputStream != null) {
+            inputStream.close();
+        }
         return properties;
     }
 

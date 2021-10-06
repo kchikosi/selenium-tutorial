@@ -27,7 +27,9 @@ public class PropertiesTest {
         ClassLoader classLoader = PropertiesManager.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream("config.properties");
         properties.load(inputStream);
-        inputStream.close();
+        if (inputStream != null) {
+            inputStream.close();
+        }
         Assert.assertNotNull(properties);
         properties.forEach((k, v) -> logger.info("key : " + k + ", value " + v));
     }
