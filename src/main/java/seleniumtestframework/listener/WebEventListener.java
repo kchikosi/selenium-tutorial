@@ -1,4 +1,4 @@
-package listener;
+package seleniumtestframework.listener;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -73,7 +73,7 @@ public class WebEventListener implements WebDriverEventListener {
 
     @Override
     public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
-        logger.info("beforeFindBy triggered");
+        logger.info("beforeFindBy triggered ");
     }
 
     @Override

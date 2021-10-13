@@ -7,8 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import policycenter.pages.PCHomePage;
-import policycenter.pages.PCLoginPage;
+import pages.policycenter.PCHomePage;
+import pages.policycenter.PCLoginPage;
 
 import java.util.concurrent.TimeUnit;
 

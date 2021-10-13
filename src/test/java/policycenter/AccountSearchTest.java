@@ -16,8 +16,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import policycenter.pages.AccountSummaryPage;
-import policycenter.pages.PCLoginPage;
+import pages.policycenter.AccountSummaryPage;
+import pages.policycenter.PCLoginPage;
 
 import java.io.IOException;
 import java.util.List;

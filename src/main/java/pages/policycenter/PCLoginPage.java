@@ -1,4 +1,4 @@
-package policycenter.pages;
+package pages.policycenter;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -6,7 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- *  Page Object encapsulates Login page
+ *  Policy Center Page Object encapsulates Login page
  */
 public class PCLoginPage {
     private static final String loginPageUrl = "http://localhost:8180/pc/PolicyCenter.do";
@@ -14,7 +14,6 @@ public class PCLoginPage {
     //locators by name-id
     @FindBy(name = "Login-LoginScreen-LoginDV-username")
     private WebElement byNameUsername;
-
     @FindBy(name = "Login-LoginScreen-LoginDV-password")
     private WebElement byNamePassword;
     @FindBy(id = "Login-LoginScreen-LoginDV-submit")

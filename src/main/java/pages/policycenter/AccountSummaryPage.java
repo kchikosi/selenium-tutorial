@@ -1,4 +1,4 @@
-package policycenter.pages;
+package pages.policycenter;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
