@@ -16,8 +16,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.policycenter.AccountSummaryPage;
-import pages.policycenter.PCLoginPage;
+import pages.policycenter.landing.AccountSummaryPage;
+import pages.policycenter.landing.PCLoginPage;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,10 +57,8 @@ public class AccountSearchTest {
         Optional<String> passwd = FilloHelper.getDataByColumnName(testStepsList, "PASSWORD");
 
         PCLoginPage pcLoginPage = new PCLoginPage(driver);
-        // orElse used in case there is no data
-        //TODO: fix this mess
-        pcLoginPage.setByXPathUsername(user.orElseThrow());
-        pcLoginPage.setByXPathPassword(passwd.orElseThrow());
+        pcLoginPage.setByXPathUsername(user.orElse(null));
+        pcLoginPage.setByXPathPassword(passwd.orElse(null));
         pcLoginPage.byXPathClickLogin();
         {
             WebDriverWait wait = new WebDriverWait(driver, 30);

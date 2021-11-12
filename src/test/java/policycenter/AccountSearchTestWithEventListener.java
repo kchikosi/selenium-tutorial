@@ -8,7 +8,7 @@ import environment.EnvironmentManager;
 import environment.PropertiesManager;
 import environment.RunEnvironment;
 import fillo.FilloHelper;
-import seleniumtestframework.listener.WebEventListener;
+import listener.WebEventListener;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,8 +18,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.policycenter.AccountSummaryPage;
-import pages.policycenter.PCLoginPage;
+import pages.policycenter.landing.AccountSummaryPage;
+import pages.policycenter.landing.PCLoginPage;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,10 +64,8 @@ public class AccountSearchTestWithEventListener {
         Optional<String> passwd = FilloHelper.getDataByColumnName(testSteps, "PASSWORD");
 
         PCLoginPage pcLoginPage = new PCLoginPage(eventFiringWebDriver);
-        // orElse used in case there is no data
-        //TODO: fix this mess
-        pcLoginPage.setByXPathUsername(user.get());
-        pcLoginPage.setByXPathPassword(passwd.get());
+        pcLoginPage.setByXPathUsername(user.orElse(null));
+        pcLoginPage.setByXPathPassword(passwd.orElse(null));
         pcLoginPage.byXPathClickLogin();
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);

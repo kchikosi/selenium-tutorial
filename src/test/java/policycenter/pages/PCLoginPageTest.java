@@ -7,8 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
-import pages.policycenter.PCHomePage;
-import pages.policycenter.PCLoginPage;
+import pages.policycenter.landing.PCHomePage;
+import pages.policycenter.landing.PCLoginPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,9 +25,10 @@ public class PCLoginPageTest {
     @Test
     public void test_PCLogin() throws InterruptedException {
         PCLoginPage pcLoginPage = new PCLoginPage(driver);
-        pcLoginPage.setByNamePassword("gw");
-        pcLoginPage.setByNameUsername("su");
-        pcLoginPage.byIdClickLogin();
+
+        pcLoginPage.setByXPathUsername("su");
+        pcLoginPage.setByXPathPassword("gw");
+        pcLoginPage.byXPathClickLogin();
 
         PCHomePage homePage = new PCHomePage(driver);
         Thread.sleep(5000);

@@ -7,9 +7,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.policycenter.AccountSummaryPage;
-import pages.policycenter.PCAccountPage;
-import pages.policycenter.PCLoginPage;
+import pages.policycenter.landing.AccountSummaryPage;
+import pages.policycenter.landing.PCAccountPage;
+import pages.policycenter.landing.PCLoginPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -25,6 +25,7 @@ public class PCAccountSearchTest {
 
 //    @Ignore
     @Test
+//    @Test
     public void test_PCAccountSearch() throws InterruptedException {
         PCLoginPage pcLoginPage = new PCLoginPage(driver);
         pcLoginPage.setByXPathUsername("su");
@@ -39,7 +40,7 @@ public class PCAccountSearchTest {
 
         summaryPage.accountTabClick();
         //if account does not exist, test should fail
-        summaryPage.setAccountNumber("N001958707");
+        summaryPage.setAccountNumber("N001958703");
         summaryPage.accountNumberSearchButtonClick();
         Thread.sleep(20000);
         PCAccountPage accountPage = new PCAccountPage(driver);

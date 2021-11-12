@@ -51,7 +51,7 @@ public class FilloDemoTest {
         List<Map<String, String>> testStepsList = FilloHelper.getStepsList(query);
         //we can assert a number of things
         //total number of steps should be 12
-        Assert.assertEquals(12, testStepsList.size());
+        Assert.assertEquals(24, testStepsList.size());
     }
 
 }

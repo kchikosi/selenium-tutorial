@@ -1,4 +1,4 @@
-package pages.policycenter;
+package pages.policycenter.landing;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +19,8 @@ public class AccountSummaryPage {
     private WebElement accountNumberSearchButton;
     @FindBy(className = "gw-TitleBar--title")
     private WebElement pageTitle;
+    @FindBy(xpath = "//div[@id='AccountFile_Summary-AccountSummaryDashboard-OpenPolicyTransactionsAccountListViewTile-NewSubmission']/div[@class='gw-action--inner gw-hasDivider']/div[@class='gw-label']")
+    private WebElement newSubmissionButton;
 
     public AccountSummaryPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -35,6 +37,10 @@ public class AccountSummaryPage {
 
     public void accountNumberSearchButtonClick() {
         this.accountNumberSearchButton.click();
+    }
+
+    public void newSubmissionButtonClick() {
+        this.newSubmissionButton.click();
     }
 
     public boolean isPageOpened() {
