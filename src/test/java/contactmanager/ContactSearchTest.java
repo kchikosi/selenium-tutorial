@@ -30,7 +30,7 @@ public class ContactSearchTest {
     JavascriptExecutor js;
 
     @Before
-    public void setup() throws IOException, FilloException {
+    public void setup() throws IOException {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         eventFiringWebDriver = new EventFiringWebDriver(driver);

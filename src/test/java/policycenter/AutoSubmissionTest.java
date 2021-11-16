@@ -44,49 +44,82 @@ public class AutoSubmissionTest {
         connection = new Fillo().getConnection(filloDatasource);
         js = eventFiringWebDriver;
     }
+
     @Test
     public void new_auto_submission_test() throws InterruptedException {
         login();
+        //TODO: remove hard-coding
         account_lookup("N001958703");
         start_submission();
         enter_qualification_info();
         enter_policy_info();
-        /* add drivers */
+        add_drivers();
+    }
+
+    /**
+     * enter driver details
+     * @throws InterruptedException
+     */
+    private void add_drivers() throws InterruptedException {
         DriversPage driversPage = new DriversPage(eventFiringWebDriver);
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
             wait.until(ExpectedConditions.visibilityOf(driversPage.getPageTitle()));
+            //TODO: remove hard-coding
             Assert.assertTrue(driversPage.isPageOpened("Drivers"));
         }
         driversPage.setAddDriver();
-        Thread.sleep(5000);
         driversPage.setAddExistingContact();
-        Thread.sleep(5000);
         driversPage.setFirstUnassignedUser();
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
+            wait.until(ExpectedConditions.visibilityOf(driversPage.getDriverListDetail()));
+        }
+        /* validate required fields before continuing to next page */
+        //TODO: remove hard-coding
+        Assert.assertTrue(driversPage.getFirstNameInput().getAttribute("value").contains("Jim"));
+        Assert.assertTrue(driversPage.getLastNameInput().getAttribute("value").contains("Brown"));
+        Assert.assertTrue(driversPage.getSelectedSalutation().contains("Mr."));
+        Assert.assertTrue(driversPage.getDateOfBirth().getAttribute("value").equals("12/05/1965"));
+        Assert.assertTrue(driversPage.getSelectedGender().contains("Male"));
+        Assert.assertTrue(driversPage.getSelectedMaritalStatus().contains("Married"));
+        Assert.assertTrue(driversPage.getSelectedLicenceType().contains("United States"));
+        Assert.assertTrue(driversPage.getLicenceDate().getAttribute("value").equals("01/01/1982"));
+        driversPage.setNext();
         Thread.sleep(5000);
-//        driversPage.setNext();
     }
 
+    /**
+     * enter policy info details
+     * @throws InterruptedException
+     */
     private void enter_policy_info() throws InterruptedException {
         PolicyInfoPage policyInfoPage = new PolicyInfoPage(eventFiringWebDriver);
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
             wait.until(ExpectedConditions.visibilityOf(policyInfoPage.getPageTitle()));
+            //TODO: remove hard-coding
             Assert.assertTrue(policyInfoPage.isPageOpened("Policy Info"));
             policyInfoPage.setNext();
         }
         Thread.sleep(5000);
     }
 
+    /**
+     * enter qualification details
+     * @throws InterruptedException
+     */
     private void enter_qualification_info() throws InterruptedException {
         /* qualification page */
         QualificationPage qualificationPage = new QualificationPage(eventFiringWebDriver);
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
             wait.until(ExpectedConditions.visibilityOf(qualificationPage.getPageTitle()));
+            //TODO: remove hard-coding
             Assert.assertTrue(qualificationPage.isPageOpened("Qualification"));
         }
         qualificationPage.setPermissionToOrderReport();
+        //TODO: remove hard-coding
         qualificationPage.setSourceOfBusiness("Testing");
         qualificationPage.setPreQualQuestionOne();
         qualificationPage.setPreQualQuestionTwo();
@@ -97,6 +130,10 @@ public class AutoSubmissionTest {
         Thread.sleep(5000);
     }
 
+    /**
+     * start a new auto submission
+     * @throws InterruptedException
+     */
     private void start_submission() throws InterruptedException {
         NewSubmissionPage submissionPage = new NewSubmissionPage(eventFiringWebDriver);
         {
@@ -108,6 +145,11 @@ public class AutoSubmissionTest {
         Thread.sleep(5000);
     }
 
+    /**
+     * account search by account number
+     * @param accountNumber
+     * @throws InterruptedException
+     */
     private void account_lookup(String accountNumber) throws InterruptedException {
 
         AccountSummaryPage accountSummaryPage = new AccountSummaryPage(eventFiringWebDriver);
@@ -123,13 +165,16 @@ public class AutoSubmissionTest {
         Thread.sleep(3000);
     }
 
-    private void login() throws InterruptedException {
+    /**
+     * log in page
+     */
+    private void login() {
         PCLoginPage pcLoginPage = new PCLoginPage(eventFiringWebDriver);
+        //TODO: remove hard-coding
         pcLoginPage.setByXPathUsername("su");
         pcLoginPage.setByXPathPassword("gw");
         pcLoginPage.byXPathClickLogin();
         PCHomePage homePage = new PCHomePage(eventFiringWebDriver);
-//        Thread.sleep(5000);
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 5);
             wait.until(ExpectedConditions.visibilityOf(homePage.getPageTitle()));
