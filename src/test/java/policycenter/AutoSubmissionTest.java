@@ -12,10 +12,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.policycenter.auto.DriversPage;
+import pages.policycenter.auto.PolicyInfoPage;
 import pages.policycenter.auto.QualificationPage;
 import pages.policycenter.landing.AccountSummaryPage;
 import pages.policycenter.landing.NewSubmissionPage;
@@ -24,13 +27,14 @@ import pages.policycenter.landing.PCLoginPage;
 
 import java.io.IOException;
 
-public class NewAutoSubmissionTest {
+public class AutoSubmissionTest {
     private EventFiringWebDriver eventFiringWebDriver;
     private Connection connection;
     private WebDriver driver;
+    JavascriptExecutor js;
 
     @Before
-    public void setUp() throws IOException, FilloException {
+    public void setup() throws IOException, FilloException {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         eventFiringWebDriver = new EventFiringWebDriver(driver);
@@ -38,34 +42,73 @@ public class NewAutoSubmissionTest {
         eventFiringWebDriver.register(eventListener);
         String filloDatasource = PropertiesManager.getValue("fillo.test.datasource");
         connection = new Fillo().getConnection(filloDatasource);
+        js = eventFiringWebDriver;
     }
     @Test
-    public void test_newAutoSubmission() throws InterruptedException {
+    public void new_auto_submission_test() throws InterruptedException {
         login();
-        accountLookup("N001958703");
-        NewSubmissionPage submissionPage = new NewSubmissionPage(eventFiringWebDriver);
-        Assert.assertTrue(submissionPage.isPageOpened());
-        submissionPage.personalAutoButtonClick();
-        Thread.sleep(3000);
+        account_lookup("N001958703");
+        start_submission();
+        enter_qualification_info();
+        enter_policy_info();
+        /* add drivers */
+        DriversPage driversPage = new DriversPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
+            wait.until(ExpectedConditions.visibilityOf(driversPage.getPageTitle()));
+            Assert.assertTrue(driversPage.isPageOpened("Drivers"));
+        }
+        driversPage.setAddDriver();
+        Thread.sleep(5000);
+        driversPage.setAddExistingContact();
+        Thread.sleep(5000);
+        driversPage.setFirstUnassignedUser();
+        Thread.sleep(5000);
+//        driversPage.setNext();
+    }
+
+    private void enter_policy_info() throws InterruptedException {
+        PolicyInfoPage policyInfoPage = new PolicyInfoPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
+            wait.until(ExpectedConditions.visibilityOf(policyInfoPage.getPageTitle()));
+            Assert.assertTrue(policyInfoPage.isPageOpened("Policy Info"));
+            policyInfoPage.setNext();
+        }
+        Thread.sleep(5000);
+    }
+
+    private void enter_qualification_info() throws InterruptedException {
         /* qualification page */
         QualificationPage qualificationPage = new QualificationPage(eventFiringWebDriver);
         {
-            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='gw-TitleBar--title']")));
-            Assert.assertTrue(qualificationPage.isPageOpened());
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
+            wait.until(ExpectedConditions.visibilityOf(qualificationPage.getPageTitle()));
+            Assert.assertTrue(qualificationPage.isPageOpened("Qualification"));
         }
         qualificationPage.setPermissionToOrderReport();
-        qualificationPage.setSourceOfBusiness("Testing only - Non-Inquiry or Misc. Records");
+        qualificationPage.setSourceOfBusiness("Testing");
         qualificationPage.setPreQualQuestionOne();
         qualificationPage.setPreQualQuestionTwo();
         qualificationPage.setPreQualQuestionThree();
         qualificationPage.setPreQualQuestionFour();
         qualificationPage.setPreQualQuestionFive();
-//        qualificationPage.setNext();
+        qualificationPage.setNext();
         Thread.sleep(5000);
     }
 
-    private void accountLookup(String accountNumber) throws InterruptedException {
+    private void start_submission() throws InterruptedException {
+        NewSubmissionPage submissionPage = new NewSubmissionPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 10);
+            wait.until(ExpectedConditions.visibilityOf(submissionPage.getPageTitle()));
+            Assert.assertTrue(submissionPage.isPageOpened());
+        }
+        submissionPage.personalAutoButtonClick();
+        Thread.sleep(5000);
+    }
+
+    private void account_lookup(String accountNumber) throws InterruptedException {
 
         AccountSummaryPage accountSummaryPage = new AccountSummaryPage(eventFiringWebDriver);
         accountSummaryPage.accountTabClick();
@@ -77,7 +120,7 @@ public class NewAutoSubmissionTest {
             Assert.assertTrue(accountSummaryPage.isPageOpened());
         }
         accountSummaryPage.newSubmissionButtonClick();
-        Thread.sleep(5000);
+        Thread.sleep(3000);
     }
 
     private void login() throws InterruptedException {
@@ -86,12 +129,16 @@ public class NewAutoSubmissionTest {
         pcLoginPage.setByXPathPassword("gw");
         pcLoginPage.byXPathClickLogin();
         PCHomePage homePage = new PCHomePage(eventFiringWebDriver);
-        Thread.sleep(5000);
-        Assert.assertTrue(homePage.isPageOpened());
+//        Thread.sleep(5000);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 5);
+            wait.until(ExpectedConditions.visibilityOf(homePage.getPageTitle()));
+            Assert.assertTrue(homePage.isPageOpened());
+        }
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         connection.close();
         eventFiringWebDriver.close();
         driver.quit();

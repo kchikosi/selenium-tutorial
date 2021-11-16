@@ -1,42 +1,34 @@
 package pages.policycenter.auto;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ISelect;
-import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * Page object encapsulates PC Qualification page
  */
-public class QualificationPage {
-    //locators
-    @FindBy(className = "gw-TitleBar--title")
-    private WebElement pageTitle;
+public class QualificationPage extends AutoPolicySubmissionPages {
     @FindBy(id = "SubmissionWizard-SubmissionWizard_PreQualificationScreen-SourceOfBusinessExtDV-SourceOfBusinessExtDV-PermOrderRpt_0")
     private WebElement permissionToOrderReport;
-    @FindBy(name = "SubmissionWizard-SubmissionWizard_PreQualificationScreen-SourceOfBusinessExtDV-SourceOfBusinessExtDV-SourceOfBusiness")
+    @FindBy(xpath = "//div[@id='SubmissionWizard-SubmissionWizard_PreQualificationScreen-SourceOfBusinessExtDV-SourceOfBusinessExtDV-SourceOfBusiness']/div[@class='gw-vw--value']/div[@class='gw-select-wrapper']/select")
     private WebElement sourceOfBusiness;
     @FindBy(id = "SubmissionWizard-SubmissionWizard_PreQualificationScreen-PreQualQuestionSetsDV-QuestionSetsDV-0-QuestionSetLV-0-QuestionModalInput-ChoiceRadioInput_NoPost_1")
     private WebElement preQualQuestionOne;
     @FindBy(id = "SubmissionWizard-SubmissionWizard_PreQualificationScreen-PreQualQuestionSetsDV-QuestionSetsDV-0-QuestionSetLV-1-QuestionModalInput-ChoiceRadioInput_NoPost_1")
     private WebElement preQualQuestionTwo;
-
     @FindBy(id = "SubmissionWizard-SubmissionWizard_PreQualificationScreen-PreQualQuestionSetsDV-QuestionSetsDV-0-QuestionSetLV-2-QuestionModalInput-ChoiceRadioInput_1")
     private WebElement preQualQuestionThree;
-
     @FindBy(id = "SubmissionWizard-SubmissionWizard_PreQualificationScreen-PreQualQuestionSetsDV-QuestionSetsDV-0-QuestionSetLV-3-QuestionModalInput-ChoiceRadioInput_1")
     private WebElement preQualQuestionFour;
     @FindBy(id = "SubmissionWizard-SubmissionWizard_PreQualificationScreen-PreQualQuestionSetsDV-QuestionSetsDV-0-QuestionSetLV-4-QuestionModalInput-ChoiceRadioInput_1")
     private WebElement preQualQuestionFive;
-    @FindBy(xpath = "//div[@id='SubmissionWizard-Next\\']/div/div[2]")
-    private WebElement next;
-    private WebDriver driver;
 
     public QualificationPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(this.driver,this);
+        super(driver);
     }
 
     public void setPermissionToOrderReport() {
@@ -44,8 +36,16 @@ public class QualificationPage {
     }
 
     public void setSourceOfBusiness(String selection) {
-        Select select = new Select(sourceOfBusiness);
-        select.selectByVisibleText(selection);
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        try {
+            sourceOfBusiness.click();
+        } catch (StaleElementReferenceException e) {
+            wait.until(ExpectedConditions.visibilityOf(sourceOfBusiness));
+            sourceOfBusiness.click();
+        }
+        String s = "'" + selection + "'";
+        WebElement selectSourceOfBusiness = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//option[contains(text()," + s + ")]")));
+        selectSourceOfBusiness.click();
     }
 
     public void setPreQualQuestionOne() {
@@ -68,11 +68,4 @@ public class QualificationPage {
         this.preQualQuestionFive.click();
     }
 
-    public void setNext() {
-        this.next.click();
-    }
-
-    public boolean isPageOpened() {
-        return pageTitle.getText().contains("Qualification");
-    }
 }

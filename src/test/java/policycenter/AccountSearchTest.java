@@ -29,7 +29,7 @@ public class AccountSearchTest {
     private Connection connection;
 
     @Before
-    public void setUp() throws IOException, FilloException {
+    public void setup() throws IOException, FilloException {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         String filloDatasource = PropertiesManager.getValue("fillo.test.datasource");
@@ -37,7 +37,7 @@ public class AccountSearchTest {
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         connection.close();
         driver.quit();
     }
@@ -48,7 +48,7 @@ public class AccountSearchTest {
      * @throws FilloException is thrown
      */
     @Test
-    public void test_accountSearch_TC002() throws FilloException, IOException {
+    public void account_search_tc002_test() throws FilloException, IOException {
         String query = "select * from testcases where testcaseid = 'TC002'";
         List<Map<String, String>> testStepsList = FilloHelper.getStepsList(query);
 

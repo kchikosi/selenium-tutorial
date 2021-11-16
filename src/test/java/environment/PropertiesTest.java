@@ -15,14 +15,14 @@ public class PropertiesTest {
     private static final Logger logger = LogManager.getLogger(PropertiesTest.class);
 
     @Test
-    public void test_getSystemProperties() {
+    public void get_system_properties_test() {
         Properties properties = System.getProperties();
         Assert.assertNotNull(properties);
         properties.forEach((k, v) -> logger.info("key : " + k + ", value " + v));
     }
 
     @Test
-    public void test_loadApplicationProperties() throws IOException {
+    public void load_application_properties_test() throws IOException {
         Properties properties = new Properties();
         ClassLoader classLoader = PropertiesManager.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream("config.properties");
@@ -35,14 +35,14 @@ public class PropertiesTest {
     }
 
     @Test
-    public void test_propertiesCount() throws IOException {
+    public void properties_count_test() throws IOException {
         Properties properties = PropertiesManager.getProperties();
         properties.forEach((k, v) -> logger.info("key : " + k + ", value " + v));
         assertEquals("Count mismatch : ", 4, properties.size());
     }
 
     @Test
-    public void test_getPropertyValueUsingKeyString() throws IOException {
+    public void get_property_value_using_key_string_test() throws IOException {
         String key = "webdriver.chrome.driver";
         String actual = PropertiesManager.getValue(key);
         String expected = "C:\\Users\\A035776\\Documents\\Development\\AMICA Dev\\Selenium\\SeleniumWebDriver\\chrome\\version\\95\\chromedriver.exe";

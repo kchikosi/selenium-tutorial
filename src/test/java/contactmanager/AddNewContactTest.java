@@ -32,7 +32,7 @@ public class AddNewContactTest {
     private EventFiringWebDriver eventFiringWebDriver;
     JavascriptExecutor js;
     @Before
-    public void setUp() throws IOException {
+    public void setup() throws IOException {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         eventFiringWebDriver = new EventFiringWebDriver(driver);
@@ -41,7 +41,7 @@ public class AddNewContactTest {
         js = eventFiringWebDriver;
     }
     @After
-    public void tearDown() {
+    public void teardown() {
         eventFiringWebDriver.close();
         driver.quit();
     }
@@ -50,7 +50,7 @@ public class AddNewContactTest {
      * add new contact to Contact manager
      */
     @Test
-    public void addNewContact_test() throws FilloException, IOException, InterruptedException {
+    public void add_new_contact_test() throws FilloException, IOException, InterruptedException {
         String query = "select * from testcases where testcaseid = 'ADD_NEW_CONTACT'";
         List<Map<String, String>> testSteps = FilloHelper.getStepsList(query);
         Optional<String> user = FilloHelper.getDataByColumnName(testSteps, "USERNAME");

@@ -32,7 +32,7 @@ public class AccountSearchTestWithEventListener {
     private WebDriver driver;
 
     @Before
-    public void setUp() throws IOException, FilloException {
+    public void setup() throws IOException, FilloException {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         eventFiringWebDriver = new EventFiringWebDriver(driver);
@@ -43,7 +43,7 @@ public class AccountSearchTestWithEventListener {
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         connection.close();
         eventFiringWebDriver.close();
         driver.quit();
@@ -55,7 +55,7 @@ public class AccountSearchTestWithEventListener {
      * @throws FilloException is thrown
      */
     @Test
-    public void test_accountSearch_TC002() throws FilloException, IOException {
+    public void account_search_tc002_test() throws FilloException, IOException {
         String query = "select * from testcases where testcaseid = 'TC002'";
         List<Map<String, String>> testSteps = FilloHelper.getStepsList(query);
 

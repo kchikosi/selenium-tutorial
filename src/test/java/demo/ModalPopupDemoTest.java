@@ -8,18 +8,18 @@ import org.junit.Test;
 
 public class ModalPopupDemoTest {
     @Before
-    public void setUp() throws Exception {
+    public void setup() throws Exception {
         EnvironmentManager.initWebDriver();
     }
 
     @Test
-    public void test_openPopup() {
+    public void open_popup_test() {
         ModalPopupDemo popupDemo = new ModalPopupDemo();
         Assert.assertTrue(popupDemo.openPopup());
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         EnvironmentManager.shutDownDriver();
     }
 }

@@ -16,14 +16,14 @@ public class PCLoginPageTest {
     private WebDriver driver;
 
     @Before
-    public void setUp() throws Exception {
+    public void setup() throws Exception {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @Test
-    public void test_PCLogin() throws InterruptedException {
+    public void pc_login_test() throws InterruptedException {
         PCLoginPage pcLoginPage = new PCLoginPage(driver);
 
         pcLoginPage.setByXPathUsername("su");
@@ -36,7 +36,7 @@ public class PCLoginPageTest {
 
     }
     @After
-    public void tearDown() {
+    public void teardown() {
         EnvironmentManager.shutDownDriver();
     }
 }

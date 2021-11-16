@@ -18,7 +18,7 @@ public class URLTest {
     }
 
     @Test
-    public void test_googleUrl() {
+    public void google_url_test() {
         WebDriver driver = RunEnvironment.getWebDriver();
         driver.get("http://www.google.com");
         String homeUrl = driver.getCurrentUrl();
@@ -26,7 +26,7 @@ public class URLTest {
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         EnvironmentManager.shutDownDriver();
     }
 

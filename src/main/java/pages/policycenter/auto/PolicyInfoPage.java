@@ -1,4 +1,11 @@
 package pages.policycenter.auto;
 
-public class PolicyInfoPage {
+import org.openqa.selenium.WebDriver;
+
+public class PolicyInfoPage extends AutoPolicySubmissionPages {
+
+    public PolicyInfoPage(WebDriver driver) {
+        super(driver);
+    }
+
 }

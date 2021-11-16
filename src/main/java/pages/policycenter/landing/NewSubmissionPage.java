@@ -22,6 +22,10 @@ public class NewSubmissionPage {
         this.personalAutoButton.click();
     }
 
+    public WebElement getPageTitle() {
+        return pageTitle;
+    }
+
     public boolean isPageOpened() {
         return pageTitle.getText().contains("New Submissions");
     }

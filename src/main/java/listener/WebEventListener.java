@@ -73,7 +73,7 @@ public class WebEventListener implements WebDriverEventListener {
 
     @Override
     public void beforeFindBy(By by, WebElement webElement, WebDriver webDriver) {
-        logger.info("beforeFindBy triggered ");
+        logger.info("beforeFindBy triggered");
     }
 
     @Override

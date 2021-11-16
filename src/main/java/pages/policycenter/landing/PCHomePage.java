@@ -18,6 +18,10 @@ public class PCHomePage {
         PageFactory.initElements(driver, this);
     }
 
+    public WebElement getPageTitle() {
+        return pageTitle;
+    }
+
     public boolean isPageOpened() {
         return pageTitle.getText().contains("My Summary");
     }

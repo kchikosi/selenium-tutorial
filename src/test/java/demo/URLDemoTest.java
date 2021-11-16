@@ -8,18 +8,18 @@ import org.junit.Test;
 public class URLDemoTest {
 
     @Before
-    public void setUp() throws Exception {
+    public void setup() throws Exception {
         EnvironmentManager.initWebDriver();
     }
 
     @Test
-    public void test_firstDemo() {
+    public void first_demo_test() {
         URLDemo URLDemo = new URLDemo();
         URLDemo.goToUrl();
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         EnvironmentManager.shutDownDriver();
     }
 }

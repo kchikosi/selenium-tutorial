@@ -25,12 +25,12 @@ public class FilloDemoTest {
     }
 
     @Test
-    public void test_Datasource_IsNotNull() {
+    public void datasource_is_not_null_test() {
         Assert.assertNotNull(dataSource);
     }
 
     @Test
-    public void test_Connection_IsNotNull() throws FilloException {
+    public void connection_is_not_null_test() throws FilloException {
         FilloDemo filloDemo = new FilloDemo(dataSource);
         Connection connection = filloDemo.getConnection();
         Assert.assertNotNull(connection);
@@ -38,7 +38,7 @@ public class FilloDemoTest {
     }
 
     @Test
-    public void test_RecordSet_IsNotNull() throws FilloException {
+    public void recordset_is_not_null_test() throws FilloException {
         FilloDemo filloDemo = new FilloDemo(dataSource);
         String query = "select * from testcases where testcaseid in (select testcaseid from testconfig where execute_flag = 'Y')";
         Recordset recordset = filloDemo.getRecordSet(query);
@@ -46,7 +46,7 @@ public class FilloDemoTest {
     }
 
     @Test
-    public void test_testCaseID_TC001() throws IOException, FilloException {
+    public void testcase_tc001_test() throws IOException, FilloException {
         String query = "select * from testcases where testcaseid in (select testcaseid from testconfig where execute_flag = 'Y')";
         List<Map<String, String>> testStepsList = FilloHelper.getStepsList(query);
         //we can assert a number of things

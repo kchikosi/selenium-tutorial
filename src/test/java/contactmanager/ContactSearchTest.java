@@ -30,7 +30,7 @@ public class ContactSearchTest {
     JavascriptExecutor js;
 
     @Before
-    public void setUp() throws IOException, FilloException {
+    public void setup() throws IOException, FilloException {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         eventFiringWebDriver = new EventFiringWebDriver(driver);
@@ -41,7 +41,7 @@ public class ContactSearchTest {
     }
 
     @After
-    public void tearDown() {
+    public void teardown() {
         eventFiringWebDriver.close();
         driver.quit();
     }
@@ -53,7 +53,7 @@ public class ContactSearchTest {
      * @throws InterruptedException
      */
     @Test
-    public void contactSearch_test() throws InterruptedException, FilloException, IOException {
+    public void contact_search_test() throws InterruptedException, FilloException, IOException {
         String query = "select * from testcases where testcaseid = 'TC003'";
         List<Map<String, String>> testSteps = FilloHelper.getStepsList(query);
         Optional<String> user = FilloHelper.getDataByColumnName(testSteps, "USERNAME");

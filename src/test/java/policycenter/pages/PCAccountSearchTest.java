@@ -17,16 +17,14 @@ public class PCAccountSearchTest {
     private WebDriver driver;
 
     @Before
-    public void setUp() throws Exception {
+    public void setup() throws Exception {
         EnvironmentManager.initWebDriver();
         driver = RunEnvironment.getWebDriver();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
-//    @Ignore
     @Test
-//    @Test
-    public void test_PCAccountSearch() throws InterruptedException {
+    public void pc_account_search_test() throws InterruptedException {
         PCLoginPage pcLoginPage = new PCLoginPage(driver);
         pcLoginPage.setByXPathUsername("su");
         pcLoginPage.setByXPathPassword("gw");
@@ -48,7 +46,7 @@ public class PCAccountSearchTest {
         //TODO: validate field values match account number
     }
     @After
-    public void tearDown() {
+    public void teardown() {
         EnvironmentManager.shutDownDriver();
     }
 }
