@@ -122,4 +122,5 @@ public class DriversPage extends AutoPolicySubmissionPages {
         Select select = new Select(getLicenceType());
         return select.getFirstSelectedOption().getText();
     }
+
 }

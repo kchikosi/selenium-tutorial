@@ -17,9 +17,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.policycenter.auto.DriversPage;
-import pages.policycenter.auto.PolicyInfoPage;
-import pages.policycenter.auto.QualificationPage;
+import pages.policycenter.auto.*;
 import pages.policycenter.landing.AccountSummaryPage;
 import pages.policycenter.landing.NewSubmissionPage;
 import pages.policycenter.landing.PCHomePage;
@@ -48,16 +46,59 @@ public class AutoSubmissionTest {
     @Test
     public void new_auto_submission_test() throws InterruptedException {
         login();
-        //TODO: remove hard-coding
+        //TODO: remove hard-coding with Fillo
         account_lookup("N001958703");
         start_submission();
         enter_qualification_info();
         enter_policy_info();
         add_drivers();
+        /* add vehicle from prefill */
+        VehiclesPage vehiclesPage = new VehiclesPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 50);
+            wait.until(ExpectedConditions.visibilityOf(vehiclesPage.getPageTitle()));
+            //TODO: remove hard-coding with Fillo
+            Assert.assertTrue(vehiclesPage.isPageOpened("Vehicles"));
+        }
+        vehiclesPage.setCreateFromPrefill();
+        Thread.sleep(5000);
+        VehiclePrefillPage vehiclePrefillPage = new VehiclePrefillPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
+            wait.until(ExpectedConditions.visibilityOf(vehiclePrefillPage.getPageTitle()));
+            //TODO: remove hard-coding with Fillo
+            Assert.assertTrue(vehiclePrefillPage.isPageOpened("View Vehicle Prefill Data"));
+        }
+        vehiclePrefillPage.setFirstCheckbox();
+        vehiclePrefillPage.setAddVehicles();
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 50);
+            wait.until(ExpectedConditions.visibilityOf(vehiclesPage.getVehicleDetailsCard()));
+        }
+
+        vehiclesPage.setCommercialUse();
+        vehiclesPage.setLoanedOrRented();
+        vehiclesPage.getSelectParking("Garaged");
+        vehiclesPage.getSelectVehicleOwner("Mr. Jim Brown");
+        vehiclesPage.setAnnualMiles("9000");
+        Thread.sleep(5000);
+        vehiclesPage.getSelectPrimaryUse("Other");
+        {
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.elementToBeClickable(vehiclesPage.getSave()));
+            js.executeScript("arguments[0].click();", vehiclesPage.getSave());
+        }
+        {
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.elementToBeClickable(vehiclesPage.getNext()));
+            js.executeScript("arguments[0].click();", vehiclesPage.getNext());
+        }
+        Thread.sleep(5000);
     }
 
     /**
      * enter driver details
+     *
      * @throws InterruptedException
      */
     private void add_drivers() throws InterruptedException {
@@ -65,7 +106,7 @@ public class AutoSubmissionTest {
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
             wait.until(ExpectedConditions.visibilityOf(driversPage.getPageTitle()));
-            //TODO: remove hard-coding
+            //TODO: remove hard-coding with Fillo
             Assert.assertTrue(driversPage.isPageOpened("Drivers"));
         }
         driversPage.setAddDriver();
@@ -76,7 +117,8 @@ public class AutoSubmissionTest {
             wait.until(ExpectedConditions.visibilityOf(driversPage.getDriverListDetail()));
         }
         /* validate required fields before continuing to next page */
-        //TODO: remove hard-coding
+        //TODO: remove hard-coding with Fillo
+        //TODO: add not null assertions for generic testing
         Assert.assertTrue(driversPage.getFirstNameInput().getAttribute("value").contains("Jim"));
         Assert.assertTrue(driversPage.getLastNameInput().getAttribute("value").contains("Brown"));
         Assert.assertTrue(driversPage.getSelectedSalutation().contains("Mr."));
@@ -91,6 +133,7 @@ public class AutoSubmissionTest {
 
     /**
      * enter policy info details
+     *
      * @throws InterruptedException
      */
     private void enter_policy_info() throws InterruptedException {
@@ -98,7 +141,7 @@ public class AutoSubmissionTest {
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
             wait.until(ExpectedConditions.visibilityOf(policyInfoPage.getPageTitle()));
-            //TODO: remove hard-coding
+            //TODO: remove hard-coding with Fillo
             Assert.assertTrue(policyInfoPage.isPageOpened("Policy Info"));
             policyInfoPage.setNext();
         }
@@ -107,6 +150,7 @@ public class AutoSubmissionTest {
 
     /**
      * enter qualification details
+     *
      * @throws InterruptedException
      */
     private void enter_qualification_info() throws InterruptedException {
@@ -115,11 +159,11 @@ public class AutoSubmissionTest {
         {
             WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
             wait.until(ExpectedConditions.visibilityOf(qualificationPage.getPageTitle()));
-            //TODO: remove hard-coding
+            //TODO: remove hard-coding with Fillo
             Assert.assertTrue(qualificationPage.isPageOpened("Qualification"));
         }
         qualificationPage.setPermissionToOrderReport();
-        //TODO: remove hard-coding
+        //TODO: remove hard-coding with Fillo
         qualificationPage.setSourceOfBusiness("Testing");
         qualificationPage.setPreQualQuestionOne();
         qualificationPage.setPreQualQuestionTwo();
@@ -132,6 +176,7 @@ public class AutoSubmissionTest {
 
     /**
      * start a new auto submission
+     *
      * @throws InterruptedException
      */
     private void start_submission() throws InterruptedException {
@@ -147,6 +192,7 @@ public class AutoSubmissionTest {
 
     /**
      * account search by account number
+     *
      * @param accountNumber
      * @throws InterruptedException
      */
@@ -170,7 +216,7 @@ public class AutoSubmissionTest {
      */
     private void login() {
         PCLoginPage pcLoginPage = new PCLoginPage(eventFiringWebDriver);
-        //TODO: remove hard-coding
+        //TODO: remove hard-coding with Fillo
         pcLoginPage.setByXPathUsername("su");
         pcLoginPage.setByXPathPassword("gw");
         pcLoginPage.byXPathClickLogin();

@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-//TODO: add Fillo framework
+//TODO: remove hard-coding with Fillo
 public class AddNewContactTest {
     private WebDriver driver;
     private EventFiringWebDriver eventFiringWebDriver;

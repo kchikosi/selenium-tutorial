@@ -16,6 +16,8 @@ public class AutoPolicySubmissionPages {
     private WebElement pageTitle;
     @FindBy(xpath = "//div[@id='SubmissionWizard-Next']/div/div[2]")
     private WebElement next;
+    @FindBy(xpath = "//*[@id='SubmissionWizard-LOBWizardStepGroup-LineWizardStepSet-PAVehiclesScreen-JobWizardToolbarButtonSet-Draft']/div/div[2]")
+    private WebElement save;
 
     protected final WebDriver driver;
     protected final JavascriptExecutor js;
@@ -30,6 +32,18 @@ public class AutoPolicySubmissionPages {
 
     public void setNext() {
         this.next.click();
+    }
+
+    public WebElement getNext() {
+        return next;
+    }
+
+    public WebElement getSave() {
+        return save;
+    }
+
+    public void setSave() {
+        this.save.click();
     }
 
     public WebElement getPageTitle() {
