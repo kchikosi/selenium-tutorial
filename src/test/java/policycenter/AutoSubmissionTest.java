@@ -52,6 +52,19 @@ public class AutoSubmissionTest {
         enter_qualification_info();
         enter_policy_info();
         add_drivers();
+        create_vehicle_from_prefill();
+        /* qualification page */
+        LossesViolationsPage lossesViolationsPage = new LossesViolationsPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
+            wait.until(ExpectedConditions.visibilityOf(lossesViolationsPage.getPageTitle()));
+            //TODO: remove hard-coding with Fillo
+            Assert.assertTrue(lossesViolationsPage.isPageOpened("Losses/Violations"));
+        }
+        Thread.sleep(5000);
+    }
+
+    private void create_vehicle_from_prefill() throws InterruptedException {
         /* add vehicle from prefill */
         VehiclesPage vehiclesPage = new VehiclesPage(eventFiringWebDriver);
         {
@@ -83,17 +96,13 @@ public class AutoSubmissionTest {
         vehiclesPage.setAnnualMiles("9000");
         Thread.sleep(5000);
         vehiclesPage.getSelectPrimaryUse("Other");
-        {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
-            wait.until(ExpectedConditions.elementToBeClickable(vehiclesPage.getSave()));
-            js.executeScript("arguments[0].click();", vehiclesPage.getSave());
+        if (vehiclesPage.getAnnualMiles().getText().length() == 0) {
+            vehiclesPage.setAnnualMiles("9000");
         }
-        {
-            WebDriverWait wait = new WebDriverWait(driver, 30);
-            wait.until(ExpectedConditions.elementToBeClickable(vehiclesPage.getNext()));
-            js.executeScript("arguments[0].click();", vehiclesPage.getNext());
-        }
-        Thread.sleep(5000);
+
+        vehiclesPage.setSave();
+        vehiclesPage.setNext();
+        Thread.sleep(3000);
     }
 
     /**
