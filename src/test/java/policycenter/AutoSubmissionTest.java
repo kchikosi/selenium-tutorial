@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -99,9 +100,18 @@ public class AutoSubmissionTest {
         if (vehiclesPage.getAnnualMiles().getText().length() == 0) {
             vehiclesPage.setAnnualMiles("9000");
         }
+        Thread.sleep(3000);
+        try {
+            vehiclesPage.setSave();
+        } catch (ElementClickInterceptedException e) {
+            js.executeScript("arguments[0].click();", vehiclesPage.getSave());
+        }
 
-        vehiclesPage.setSave();
-        vehiclesPage.setNext();
+        try {
+            vehiclesPage.setNext();
+        } catch (ElementClickInterceptedException e) {
+            js.executeScript("arguments[0].click();", vehiclesPage.getNext());
+        }
         Thread.sleep(3000);
     }
 
