@@ -38,7 +38,7 @@ public class PCAccountSearchTest {
 
         summaryPage.accountTabClick();
         //if account does not exist, test should fail
-        summaryPage.setAccountNumber("N001958703");
+        summaryPage.setAccountNumber("N001958702");
         summaryPage.accountNumberSearchButtonClick();
         Thread.sleep(20000);
         PCAccountPage accountPage = new PCAccountPage(driver);

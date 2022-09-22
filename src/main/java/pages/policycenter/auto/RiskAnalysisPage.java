@@ -1,4 +1,9 @@
 package pages.policycenter.auto;
 
-public class RiskAnalysisPage {
+import org.openqa.selenium.WebDriver;
+
+public class RiskAnalysisPage extends  AutoPolicySubmissionPages {
+    public RiskAnalysisPage(WebDriver driver) {
+        super(driver);
+    }
 }

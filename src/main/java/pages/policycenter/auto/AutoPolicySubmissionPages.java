@@ -18,6 +18,8 @@ public class AutoPolicySubmissionPages {
     private WebElement next;
     @FindBy(xpath = "//*[@id='SubmissionWizard-LOBWizardStepGroup-LineWizardStepSet-PAVehiclesScreen-JobWizardToolbarButtonSet-Draft']/div/div[2]")
     private WebElement save;
+    @FindBy(xpath = "//*[@id='SubmissionWizard-SubmissionWizard_PolicyReviewScreen-JobWizardToolbarButtonSet-QuoteOrReview']/div/div[2]")
+    private WebElement quote;
 
     protected final WebDriver driver;
     protected final JavascriptExecutor js;
@@ -44,6 +46,14 @@ public class AutoPolicySubmissionPages {
 
     public void setSave() {
         this.save.click();
+    }
+
+    public WebElement getQuote() {
+        return quote;
+    }
+
+    public void setQuote() {
+        this.quote.click();
     }
 
     public WebElement getPageTitle() {

@@ -11,10 +11,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -27,10 +24,10 @@ import pages.policycenter.landing.PCLoginPage;
 import java.io.IOException;
 
 public class AutoSubmissionTest {
+    JavascriptExecutor js;
     private EventFiringWebDriver eventFiringWebDriver;
     private Connection connection;
     private WebDriver driver;
-    JavascriptExecutor js;
 
     @Before
     public void setup() throws IOException, FilloException {
@@ -54,6 +51,69 @@ public class AutoSubmissionTest {
         enter_policy_info();
         add_drivers();
         create_vehicle_from_prefill();
+        enter_loss_violations();
+        enter_rating_inputs();
+        /* SxS quoting */
+        SxSQuotingPage sxsQuotingPage = new SxSQuotingPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
+            wait.until(ExpectedConditions.visibilityOf(sxsQuotingPage.getPageTitle()));
+            //TODO: remove hard-coding with Fillo
+            Assert.assertTrue(sxsQuotingPage.isPageOpened("SxS Quoting"));
+        }
+        //TODO: save draft before next
+        sxsQuotingPage.setNext();
+        /* risk analysis */
+        RiskAnalysisPage riskAnalysisPage = new RiskAnalysisPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
+            wait.until(ExpectedConditions.visibilityOf(riskAnalysisPage.getPageTitle()));
+            //TODO: remove hard-coding with Fillo
+            Assert.assertTrue(riskAnalysisPage.isPageOpened("Risk Analysis"));
+        }
+        riskAnalysisPage.setNext();
+        Thread.sleep(3000);
+        /* policy review */
+        PolicyReviewPage policyReviewPage = new PolicyReviewPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
+            wait.until(ExpectedConditions.visibilityOf(policyReviewPage.getPageTitle()));
+            //TODO: remove hard-coding with Fillo
+            Assert.assertTrue(policyReviewPage.isPageOpened("Policy Review"));
+        }
+        /* click evaluate risk, hit alert button */
+        policyReviewPage.setEvaluateRisk();
+        eventFiringWebDriver.switchTo().alert().accept();
+        /* try to quote */
+        policyReviewPage.setQuote();
+        Thread.sleep(3000);
+
+
+    }
+
+    private void enter_rating_inputs() {
+        /* rating inputs page */
+        RatingsInputPage ratingsInputPage = new RatingsInputPage(eventFiringWebDriver);
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 120);
+            wait.until(ExpectedConditions.visibilityOf(ratingsInputPage.getPageTitle()));
+            //TODO: remove hard-coding with Fillo
+            Assert.assertTrue(ratingsInputPage.isPageOpened("Rating Inputs"));
+        }
+        //TODO: remove hard-coding with Fillo
+        ratingsInputPage.getSelectedLifePolicyCount("0");
+        ratingsInputPage.getSelectedHomeOwnership("No");
+        ratingsInputPage.getSelectedFurnishedAutos("0");
+        ratingsInputPage.setHasOtherVehiclesNo();
+        ratingsInputPage.setHasPriorPolicyNo();
+        ratingsInputPage.setPaidInFullDiscountNo();
+        ratingsInputPage.seteDiscountNo();
+        ratingsInputPage.setAutoPayDiscountNo();
+        //TODO: add assertions and save before next
+        ratingsInputPage.setNext();
+    }
+
+    private void enter_loss_violations() throws InterruptedException {
         /* qualification page */
         LossesViolationsPage lossesViolationsPage = new LossesViolationsPage(eventFiringWebDriver);
         {
@@ -62,6 +122,8 @@ public class AutoSubmissionTest {
             //TODO: remove hard-coding with Fillo
             Assert.assertTrue(lossesViolationsPage.isPageOpened("Losses/Violations"));
         }
+        lossesViolationsPage.setLossViolationsNo();
+        lossesViolationsPage.setNext();
         Thread.sleep(5000);
     }
 
@@ -90,22 +152,67 @@ public class AutoSubmissionTest {
             wait.until(ExpectedConditions.visibilityOf(vehiclesPage.getVehicleDetailsCard()));
         }
 
-        vehiclesPage.setCommercialUse();
-        vehiclesPage.setLoanedOrRented();
+        vehiclesPage.getSelectBodyType("OTHER");
+
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver, 30);
+            wait.until(ExpectedConditions.visibilityOf(vehiclesPage.getSymbol()));
+            vehiclesPage.setSymbol("F");
+            vehiclesPage.getSelectAntiLockBrakes("No anti-lock brakes");
+            vehiclesPage.getSelectAntiTheft("No anti-theft");
+            Thread.sleep(3000);
+            {
+//                WebDriverWait wait = new WebDriverWait(eventFiringWebDriver,30);
+                wait.until(ExpectedConditions.elementToBeClickable(vehiclesPage.getElectronicStabilityControlNo()));
+                vehiclesPage.setElectronicStabilityControlNo();
+            }
+            vehiclesPage.getSelectPassiveRestraint("None");
+            vehiclesPage.getSelectFwdCollisionWarningSystem("None");
+        }
+
+        vehiclesPage.getSelectNewUsed("Used");
+
+        //needs to be clicked twice
+        while (!vehiclesPage.getCommercialUseNo().isSelected()) {
+            vehiclesPage.setCommercialUse();
+        }
+
+        vehiclesPage.setLoanedOrRentedNo();
+
         vehiclesPage.getSelectParking("Garaged");
-        vehiclesPage.getSelectVehicleOwner("Mr. Jim Brown");
-        vehiclesPage.setAnnualMiles("9000");
-        Thread.sleep(5000);
         vehiclesPage.getSelectPrimaryUse("Other");
-        if (vehiclesPage.getAnnualMiles().getText().length() == 0) {
-            vehiclesPage.setAnnualMiles("9000");
+        vehiclesPage.getSelectVehicleOwner("Mr. Jim Brown");
+
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver,30);
+            wait.until(ExpectedConditions.elementToBeClickable(vehiclesPage.getDailyMiles()));
+            vehiclesPage.getDailyMiles().sendKeys("24");
+            vehiclesPage.getDailyMiles().sendKeys(Keys.TAB);
         }
-        Thread.sleep(3000);
-        try {
-            vehiclesPage.setSave();
-        } catch (ElementClickInterceptedException e) {
-            js.executeScript("arguments[0].click();", vehiclesPage.getSave());
+        {
+            WebDriverWait wait = new WebDriverWait(eventFiringWebDriver,30);
+            wait.until(ExpectedConditions.elementToBeClickable(vehiclesPage.getAnnualMiles()));
         }
+
+        if (!vehiclesPage.getVehicleOwner().getText().contains("Jim")) {
+            vehiclesPage.getSelectVehicleOwner("Mr. Jim Brown");
+        }
+        /* try to save, some data gets lost during save */
+        vehiclesPage.setSave();
+        /* check select fields are present */
+        Assert.assertTrue(vehiclesPage.getVehicleOwner().getText().contains("Jim"));
+        Assert.assertTrue(vehiclesPage.getParking().getText().contains("Garaged"));
+        Assert.assertTrue(vehiclesPage.getPrimaryUse().getText().contains("Other"));
+        Assert.assertTrue(vehiclesPage.getPurchaseType().getText().contains("Purchased"));
+        Assert.assertTrue(vehiclesPage.getNewUsed().getText().contains("Used"));
+        Assert.assertTrue(vehiclesPage.getAntiLockBrakes().getText().contains("No "));
+        Assert.assertTrue(vehiclesPage.getAntiTheft().getText().contains("No "));
+        /* check radio buttons are selected */
+        Assert.assertTrue(vehiclesPage.getElectronicStabilityControlNo().isSelected());
+        Assert.assertTrue(vehiclesPage.getCommercialUseNo().isSelected());
+        Assert.assertTrue(vehiclesPage.getLoanedOrRentedNo().isSelected());
+
+
 
         try {
             vehiclesPage.setNext();
